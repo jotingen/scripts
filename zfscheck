@@ -1,0 +1,23 @@
+#!/bin/bash
+EMAIL_ADD=jotingen@gmail.com
+
+
+  echo "To: jotingen@gmail.com" > /tmp/zfs.stat
+  echo "From: jotingen@gmail.com" >> /tmp/zfs.stat
+  /sbin/zpool status -x | grep 'all pools are healthy'
+  if [ $? -ne 0 ]; then
+    echo "Subject: NAS ERROR!" >> /tmp/zfs.stat
+    else
+    echo "Subject: NAS ok" >> /tmp/zfs.stat
+  fi
+  echo >> /tmp/zfs.stat
+  /bin/date >> /tmp/zfs.stat
+  echo >> /tmp/zfs.stat
+  /bin/hostname >> /tmp/zfs.stat
+  echo >> /tmp/zfs.stat
+  /sbin/zpool status -x >> /tmp/zfs.stat
+  echo >> /tmp/zfs.stat
+  /sbin/zpool status -v >> /tmp/zfs.stat 
+  echo >> /tmp/zfs.stat
+  /sbin/zfs list -r nas >> /tmp/zfs.stat 
+  /usr/sbin/ssmtp jotingen@gmail.com < /tmp/zfs.stat
