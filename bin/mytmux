@@ -1,0 +1,31 @@
+#!/bin/bash
+SESSION=$USER
+
+#Reconnect to session if it exists
+tmux has-session -t $SESSION
+if [ $? -eq 0 ]; then
+echo "Session $SESSION already exists. Attaching."
+sleep 1
+tmux attach -t $SESSION
+exit 0;
+fi
+
+#Create new session
+tmux new-session -d -s $SESSION
+
+## #Create windows
+## tmux set-window-option -t $SESSION -g automatic-rename off
+## tmux new-window   -t $SESSION:0 -k -n Monitors 
+## tmux send-keys    -t $SESSION:0 'top' 'C-m'
+## tmux split-window -t $SESSION:0 -v
+## tmux send-keys    -t $SESSION:0 'top' 'C-m'
+## sleep 1
+## tmux send-keys    -t $SESSION:0 'M'
+## tmux split-window -t $SESSION:0 -h
+## tmux send-keys    -t $SESSION:0 'watch -n 3 "dmesg | tail -n 100"' 'C-m'
+## #tmux new-window    -t $SESSION:1 -k -n STATUS
+## 
+## 
+## tmux select-window -t $SESSION:0
+tmux attach -t $SESSION
+
